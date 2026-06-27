@@ -12,7 +12,7 @@ A Bukkit/Paper plugin that displays a floating heart-based health bar above mobs
 Every few ticks the plugin scans nearby entities for each online player and sets their custom name to a coloured heart bar, like:
 
 ```
-§a❤❤❤❤❤❤❥♡♡♡
+§a❤❤❤❤❤❤💔♡♡♡
 ```
 
 The bar length matches the entity's real max hearts (e.g. a Zombie has 10 hearts so it gets a 10-heart bar). A configurable cap prevents bosses with huge HP pools from showing an absurdly long bar. Each player has their own settings — one player can hide passive mob bars while another sees them — without affecting anyone else.
@@ -76,7 +76,7 @@ bar:
   max-segments: 20      # Maximum number of hearts to display regardless of entity max HP
 
   full-char:  "❤"       # Character for a full heart
-  half-char:  "❥"       # Character for a half heart
+  half-char:  "💔"       # Character for a half heart
   empty-char: "♡"       # Character for an empty heart
 
   smooth-color: true    # Reserved for future per-segment colour transitions
