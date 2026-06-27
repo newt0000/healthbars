@@ -12,25 +12,15 @@ public class EntityTagManager {
 
     private final JavaPlugin plugin;
 
-    /*private final Set<EntityType> hostile = EnumSet.of(
-            EntityType.ZOMBIE,
-            EntityType.SKELETON,
-            EntityType.CREEPER,
-            EntityType.SPIDER,
-            EntityType.ENDERMAN
-    );
+    private final Set<EntityType> hostile = EnumSet.noneOf(EntityType.class);
+    private final Set<EntityType> passive = EnumSet.noneOf(EntityType.class);
 
-    private final Set<EntityType> passive = EnumSet.of(
-            EntityType.COW,
-            EntityType.SHEEP,
-            EntityType.CHICKEN,
-            EntityType.PIG
-    );*/
-    private static final Set<EntityType> hostile = EnumSet.noneOf(EntityType.class);
-    private static final Set<EntityType> passive = EnumSet.noneOf(EntityType.class);
+    public EntityTagManager(JavaPlugin plugin) {
+        this.plugin = plugin;
+        reload();
+    }
 
-    public static void reload() {
-
+    public void reload() {
         hostile.clear();
         passive.clear();
 
@@ -51,9 +41,6 @@ public class EntityTagManager {
                 Healthbars.getInstance().getLogger().warning("Unknown passive entity: " + type);
             }
         }
-    }
-    public EntityTagManager(JavaPlugin plugin) {
-        this.plugin = plugin;
     }
 
     public boolean isHostile(EntityType type) {

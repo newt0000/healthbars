@@ -28,9 +28,9 @@ bar:
   max-segments: 20
 
   # Characters used
-  full-char: "█"
-  half-char: "▌"
-  empty-char: "░"
+  full-char: "❤"
+  half-char: "❥"
+  empty-char: "♡"
 
 
   # Enable smooth color transitions per segment

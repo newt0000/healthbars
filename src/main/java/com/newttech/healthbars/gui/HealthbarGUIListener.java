@@ -13,67 +13,39 @@ public class HealthbarGUIListener implements Listener {
     public void onClick(InventoryClickEvent e) {
 
         if (!(e.getWhoClicked() instanceof Player p)) return;
-        if (!e.getView().getTitle().equals("§8Healthbars Settings")) return;
+
+        // Match the title produced by ConfigManager (already §-translated)
+        String expectedTitle = Healthbars.getInstance().getConfigManager().guiTitle;
+        if (!e.getView().getTitle().equals(expectedTitle)) return;
 
         e.setCancelled(true);
 
-        Settings s = Healthbars.getInstance().getSettingsManager().get(p);
-
         if (e.getCurrentItem() == null) return;
 
-        Material type = e.getCurrentItem().getType();
+        Healthbars plugin   = Healthbars.getInstance();
+        Settings   s        = plugin.getSettingsManager().get(p);
+        Material   type     = e.getCurrentItem().getType();
 
         switch (type) {
 
             case ZOMBIE_HEAD -> {
-
                 s.showHostile = !s.showHostile;
-
-                Healthbars.getInstance()
-                        .getHealthbarManager()
-                        .cleanupAllHealthbars();
-
+                // Per-player cleanup: only clear entities near this player so
+                // other players' bars are not affected.
+                plugin.getHealthbarManager().cleanupForPlayer(p);
                 new HealthbarMenu(p).open();
             }
 
             case SHEEP_SPAWN_EGG -> {
-
                 s.showPassive = !s.showPassive;
-
-                Healthbars.getInstance()
-                        .getHealthbarManager()
-                        .cleanupAllHealthbars();
-
+                plugin.getHealthbarManager().cleanupForPlayer(p);
                 new HealthbarMenu(p).open();
             }
-            case REDSTONE -> {
 
-                Healthbars plugin = Healthbars.getInstance();
-
-                plugin.reloadConfig();
-
-                plugin.getBlacklistManager().reload();
-                plugin.getTagManager().reload();
-
-                plugin.getHealthbarManager().cleanupAllHealthbars();
-
-                p.sendMessage("§aHealthbars configuration reloaded.");
-
-                new HealthbarMenu(p).open();
-            }
             case COMPASS -> {
-
-                var config = Healthbars.getInstance().getConfig();
-
-                double[] distances = {
-                        config.getDouble("gui.distances.low"),
-                        config.getDouble("gui.distances.medium"),
-                        config.getDouble("gui.distances.normal"),
-                        config.getDouble("gui.distances.max")
-                };
+                double[] distances = plugin.getConfigManager().guiDistances;
 
                 int next = 0;
-
                 for (int i = 0; i < distances.length; i++) {
                     if (distances[i] == s.renderDistance) {
                         next = (i + 1) % distances.length;
@@ -82,11 +54,21 @@ public class HealthbarGUIListener implements Listener {
                 }
 
                 s.renderDistance = distances[next];
+                // Clean up entities that are now outside the new (smaller) distance,
+                // or refresh so newly-included ones appear on the next tick.
+                plugin.getHealthbarManager().cleanupForPlayer(p);
+                new HealthbarMenu(p).open();
+            }
 
-                Healthbars.getInstance()
-                        .getHealthbarManager()
-                        .cleanupAllHealthbars();
-
+            case REDSTONE -> {
+                plugin.reloadConfig();
+                plugin.getConfigManager().reload();
+                plugin.getBlacklistManager().reload();
+                plugin.getTagManager().reload();
+                // Full global wipe on a config reload is intentional — settings
+                // may have changed for all entities/players.
+                plugin.getHealthbarManager().cleanupAllHealthbars();
+                p.sendMessage("§aHealthbars configuration reloaded.");
                 new HealthbarMenu(p).open();
             }
 
