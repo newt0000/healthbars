@@ -1,0 +1,23 @@
+name: healthbars
+description: $description
+prefix: [ Newts WorldPoints ]
+version: '${version}'
+
+main: com.newttech.healthbars.Healthbars
+api-version: '26.2'
+load: POSTWORLD
+
+authors: [ Newt_00 ]
+website: ycs.newt-tech.com
+
+commands:
+  hb:
+    description: Healthbar GUI + controls
+    usage: /hb
+    aliases: [healthbars]
+  hbbuild:
+    description: healthbars plugin build version
+    usage: /hbbuild
+  hbcleanup:
+    description: cleanup and reapply healthbars to only allowed entities
+    usage: /hbcleanup

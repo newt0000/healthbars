@@ -1,0 +1,142 @@
+# =========================
+# Healthbars Plugin Config
+# =========================
+
+settings:
+
+  # Default visibility toggles for new players
+  default-show-hostile: true
+  default-show-passive: true
+
+  # Global render distance cap (performance safety net)
+  max-render-distance: 32.0
+
+  # How often bars update (in ticks)
+  update-interval: 10
+
+  # Whether to hide bars when entity is full HP
+  hide-full-health: false
+
+
+# =========================
+# Visual Settings
+# =========================
+
+bar:
+
+  # Total segments in the ASCII bar
+  length: 10
+
+  # Characters used
+  filled-char: "█"
+  empty-char: "░"
+
+  # Enable smooth color transitions per segment
+  smooth-color: true
+
+  # Colors by health percentage
+  colors:
+    high: "&a"    # 75%+
+    mid-high: "&e" # 50–75%
+    mid: "&6"      # 25–50%
+    low: "&c"      # 0–25%
+
+
+# =========================
+# Entity Categories
+# =========================
+
+entities:
+
+  hostile:
+    enabled: true
+    list:
+      - ZOMBIE
+      - SKELETON
+      - CREEPER
+      - SPIDER
+      - ENDERMAN
+      - WITCH
+      - SLIME
+      - DROWNED
+      - BLAZE
+
+  passive:
+    enabled: true
+    list:
+      - COW
+      - SHEEP
+      - PIG
+      - CHICKEN
+      - HORSE
+      - VILLAGER
+      - RABBIT
+
+# =========================
+# ENTITY BLACKLIST
+# =========================
+# These entities will NEVER receive healthbars
+
+blacklist:
+  enabled: true
+
+  entities:
+    - ARMOR_STAND
+    - ITEM_FRAME
+    - GLOW_ITEM_FRAME
+    - PAINTING
+    - LEASH_KNOT
+    - AREA_EFFECT_CLOUD
+    - EXPERIENCE_ORB
+    - ITEM
+    - EVOKER_FANGS
+    - FISHING_BOBBER
+    - LIGHTNING_BOLT
+# =========================
+# Boss Settings
+# =========================
+
+bossbar:
+  enabled: true
+
+  # Switch to bossbar when HP > threshold
+  threshold-health: 40.0
+
+  color: PURPLE
+  style: SEGMENTED_10
+
+
+# =========================
+# Performance
+# =========================
+
+performance:
+
+  # Skip entities further than this (hard cap)
+  hard-cutoff-distance: 48.0
+
+  # Only update entities every N ticks (staggered load reduction)
+  stagger-ticks: 2
+
+  # Limit entities processed per tick per player
+  max-entities-per-player: 40
+
+
+# =========================
+# GUI Settings
+# =========================
+
+gui:
+
+  title: "&8Healthbar Settings"
+
+  rows: 3
+
+  # Distance selector presets (wool buttons later)
+  distances:
+    low: 8
+    medium: 16
+    normal: 24
+    max: 32
+
+  pagination-size: 21
