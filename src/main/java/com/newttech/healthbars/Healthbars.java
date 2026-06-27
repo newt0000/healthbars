@@ -1,8 +1,11 @@
 package com.newttech.healthbars;
 
+import com.newttech.healthbars.command.HealthbarCommand;
 import com.newttech.healthbars.manager.*;
 import com.newttech.healthbars.task.HealthbarTask;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 public class Healthbars extends JavaPlugin {
 
@@ -13,6 +16,7 @@ public class Healthbars extends JavaPlugin {
     private HealthbarManager healthbarManager;
     private EntityBlacklistManager blacklistManager;
     private PlayerSettingsManager settingsManager;
+    private HealthbarCommand HealthbarCommand;
 
     @Override
     public void onEnable(){
@@ -25,7 +29,7 @@ public class Healthbars extends JavaPlugin {
         healthbarManager = new HealthbarManager(this);
         blacklistManager = new EntityBlacklistManager();
         settingsManager  = new PlayerSettingsManager(this);
-
+        Objects.requireNonNull(getCommand("hb")).setExecutor(new HealthbarCommand());
         getServer().getPluginManager().registerEvents(
                 new com.newttech.healthbars.gui.HealthbarGUIListener(),
                 this
@@ -40,7 +44,10 @@ public class Healthbars extends JavaPlugin {
                 "/_/ /_/\\___/\\__,_/_/\\__/_/ /_/_____/\\__,_/_/  /____/  \n" +
                 "                                                      \nBy: Newt_00");
     }
-
+    public String pretty(String msg) {
+        String value = msg.replace('&','§');
+        return value;
+    }
     public static Healthbars getInstance(){ return instance; }
 
     public ConfigManager getConfigManager()         { return configManager; }

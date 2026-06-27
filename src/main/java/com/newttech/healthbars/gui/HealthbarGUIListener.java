@@ -6,9 +6,25 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
 import org.bukkit.event.inventory.*;
+import com.newttech.healthbars.*;
 
 public class HealthbarGUIListener implements Listener {
-
+    public String pretty(String msg) {
+        String value = msg.replace('&','§');
+        return value;
+    }
+    public String read(Boolean state, String value) {
+        String color = null;
+        String status = null;
+        if (state) {
+            color = "&a";
+            status = "True";
+        } else {
+            color = "&c";
+            status = "False";
+        }
+        return pretty(value +" | "+color + status);
+    }
     @EventHandler
     public void onClick(InventoryClickEvent e) {
 
@@ -30,6 +46,10 @@ public class HealthbarGUIListener implements Listener {
 
             case ZOMBIE_HEAD -> {
                 s.showHostile = !s.showHostile;
+                Boolean pvhbh = true;
+                if (s.showHostile) {pvhbh = true;}else {pvhbh = false;}
+                String col = read(pvhbh, "&a[Healthbars] healthbar passive rendering set to ");
+                p.sendMessage(col);
                 // Per-player cleanup: only clear entities near this player so
                 // other players' bars are not affected.
                 plugin.getHealthbarManager().cleanupForPlayer(p);
@@ -38,6 +58,12 @@ public class HealthbarGUIListener implements Listener {
 
             case SHEEP_SPAWN_EGG -> {
                 s.showPassive = !s.showPassive;
+                Boolean pvhb = true;
+                if (s.showPassive) {pvhb = true;}else {pvhb = false;}
+                String col = read(pvhb, "&a[Healthbars] healthbar passive rendering set to ");
+
+
+                p.sendMessage(col);
                 plugin.getHealthbarManager().cleanupForPlayer(p);
                 new HealthbarMenu(p).open();
             }
@@ -49,6 +75,7 @@ public class HealthbarGUIListener implements Listener {
                 for (int i = 0; i < distances.length; i++) {
                     if (distances[i] == s.renderDistance) {
                         next = (i + 1) % distances.length;
+                        p.sendMessage(pretty("&b[Healthbars] &eRendering distance for healthbars set to &6"+s.renderDistance));
                         break;
                     }
                 }

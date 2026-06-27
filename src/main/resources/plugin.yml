@@ -12,8 +12,8 @@ website: ycs.newt-tech.com
 
 commands:
   hb:
-    description: Healthbar GUI + controls
-    usage: /hb
+    description: Healthbar GUI + controls or reload
+    usage: /hb [reload]
     aliases: [healthbars]
   hbbuild:
     description: healthbars plugin build version

@@ -1,7 +1,7 @@
 name: healthbars
 description: intuitive easy and useful world point teleport manager
 prefix: [ Newts WorldPoints ]
-version: '1.0-SNAPSHOT'
+version: '1.0-BETA'
 
 main: com.newttech.healthbars.Healthbars
 api-version: '26.2'
@@ -12,8 +12,8 @@ website: ycs.newt-tech.com
 
 commands:
   hb:
-    description: Healthbar GUI + controls
-    usage: /hb
+    description: Healthbar GUI + controls or reload
+    usage: /hb [reload]
     aliases: [healthbars]
   hbbuild:
     description: healthbars plugin build version
