@@ -25,11 +25,13 @@ settings:
 bar:
 
   # Total segments in the ASCII bar
-  length: 10
+  max-segments: 20
 
   # Characters used
-  filled-char: "█"
-  empty-char: "░"
+  full-char: "❤"
+  half-char: "❥"
+  empty-char: "♡"
+
 
   # Enable smooth color transitions per segment
   smooth-color: true
